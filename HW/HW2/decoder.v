@@ -1,3 +1,6 @@
+`define AND and #50
+`define NOT not #50
+
 module behavioralDecoder(out0,out1,out2,out3, address0,address1, enable);
 output out0, out1, out2, out3;
 input address0, address1;
@@ -9,15 +12,21 @@ module structuralDecoder(out0,out1,out2,out3, address0,address1, enable);
 output out0, out1, out2, out3;
 input address0, address1;
 input enable;
-  // Your decoder code here
+wire nA0, nA1;
+`NOT A0inv(nA0, address0);
+`NOT A1inv(nA1, address1);
+`AND In0Adder(out0, nA0, nA1, enable);
+`AND In1Adder(out1, address0, nA1, enable);
+`AND In2Adder(out2, nA0, address1, enable);
+`AND In3Adder(out3, address0, address1, enable);
 endmodule
 
 module testDecoder; 
 reg addr0, addr1;
 reg enable;
 wire out0,out1,out2,out3;
-behavioralDecoder decoder (out0,out1,out2,out3,addr0,addr1,enable);
-//structuralDecoder decoder (out0,out1,out2,out3,addr0,addr1,enable); // Swap after testing
+//behavioralDecoder decoder (out0,out1,out2,out3,addr0,addr1,enable);
+structuralDecoder decoder (out0,out1,out2,out3,addr0,addr1,enable); // Swap after testing
 
 initial begin
 $display("En A0 A1| O0 O1 O2 O3 | Expected Output");
