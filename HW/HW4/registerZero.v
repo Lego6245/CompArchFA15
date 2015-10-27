@@ -1,4 +1,4 @@
-// 32 bit D Flip-Flop with enable
+// 32 bit Zero Register with enable
 //   Positive edge triggered
 module register
 (
@@ -8,10 +8,7 @@ input		wrenable,
 input		clk
 );
 
-    always @(posedge clk) begin
-        if(wrenable) begin
-			q = d;
-        end
-    end
+    initial begin
+	end
 
 endmodule
